@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Students assigned to  {% endblock %}
+{# TODO - cum iau numele trainerului sa il afisez in titlu? #}
+
+{% block content %}
+        <div class="container-fluid">
+        <div class="row">
+
+            {% if all_students %}
+                <div class="col-md-12">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Profile</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Name of trainer</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        {% for student in all_students %} {# check here how to make the loop #}
+                             <tr onclick="window.location='{% url 'detailed-student' student.id %}';">
+                                <td>{{ forloop.counter }}</td>
+                                <td>
+                                    {% if student.profile %}
+                                        <img src="{{ student.profile.url }}" style="width:60px; height:60px" alt="No image">
+                                    {% else %}
+                                        {% if student.gender == 'male' %}
+                                            <img src="{% static 'images/default_student_male.png' %}" style="width:60px; height:60px" alt="No image">
+                                        {% else %}
+                                            <img src="{% static 'images/default_student_female.png' %}"  style="width:60px; height:60px" alt="No image">
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>{{ student.first_name }}</td>
+                                <td>{{ student.last_name }}</td>
+                                <td>{{ student.email }}</td>
+                                <td>
+                                    {% if student.active %}
+                                        Active
+                                    {% else %}
+                                        Inactive
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if student.trainer %}
+                                        {{ student.trainer }}
+                                    {% else %}
+                                        {{ 'No trainer' }}
+                                    {% endif %}
+                                    </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <div class="col-md-4 offset-md-4"> There are no students assigned to this trainer </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

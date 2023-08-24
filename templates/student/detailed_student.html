@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Detailed View for {{ student }} {% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card text-center">
+            <div class="card-header">
+            {% if student_detail.profile %}
+                <img src="{{ student.profile.url }}" style="width:60px; height:60px" alt="No image">
+            {% else %}
+                {% if student.gender == 'male' %}
+                    <img src="{% static 'images/default_student_male.png' %}" style="width:60px; height:60px" alt="No image">
+                {% else %}
+                    <img src="{% static 'images/default_student_female.png' %}" style="width:60px; height:60px" alt="No image">
+                {% endif %}
+            {% endif %}
+            </div>
+        <div class="card-body">
+            <h5 class="card-title"> {{ student }} </h5>
+            <p class="card-text"><strong>Email: </strong> {{ student.email }}</p>
+            <a href="{% url 'list-of-students' %}" class="btn btn-primary">Cancel</a>
+        </div>
+        <div class="card-footer text-body-secondary">
+            Created at {{ student.created_at|date:"d-m-Y H:i:s" }} / Updated at {{ student.update_at|date:"d-m-Y H:i:s" }}
+        </div>
+            </div>
+
+
+
+
+{#            {% if student_detail.profile %}#}
+{#                <img src="{{ student_detail.profile.url }}" class="card-img-top" alt="No image">#}
+{#            {% else %}#}
+{#                {% if student_detail.gender == 'male' %}#}
+{#                    <img src="{% static 'images/default_student_male.png' %}" class="card-img-top" alt="No image">#}
+{#                {% else %}#}
+{#                    <img src="{% static 'images/default_student_female.png' %}" class="card-img-top" alt="No image">#}
+{#                {% endif %}#}
+{#            {% endif %}#}
+{#            <div class="card-body">#}
+{#                <h5 class="card-title">First Name: {{ student_detail.first_name }}</h5>#}
+{#                <h5 class="card-title">Last Name: {{ student_detail.last_name }}</h5>#}
+{#                <p class="card-text">Age: {{ student_detail.age }}</p>#}
+{#                <p class="card-text">Email: {{ student_detail.email}}</p>#}
+{#                <p class="card-text">Description: {{ student_detail.description }}</p>#}
+{#                <p class="card-text">Active: {{ student_detail.active }}</p>#}
+{#                <p class="card-text">Start date: {{ student_detail.start_date }}</p>#}
+{#                <p class="card-text">End date: {{ student_detail.end_date }}</p>#}
+{#                <p class="card-text">Gender: {{ student_detail.gender }}</p>#}
+{#                <p class="card-text">Trainer: {{ student_detail.trainer }}</p>#}
+{#                <p class="card-text">Created at: {{ student_detail.created_at }}</p>#}
+{#                <p class="card-text">Updated at: {{ student_detail.update_at }}</p>#}
+{#                <a href="{% url 'update-student' student_detail.id %}" class="btn btn-primary">Update Data</a>#}
+{#                <a href="#" class="btn btn-primary">Delete Student</a>#}
+{#                <a href="{% url 'list-of-students' %}" class="btn btn-primary">Go to list of students</a>#}
+{#            </div>#}
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

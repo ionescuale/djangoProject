@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %} List of Cooking Books {% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-6 offset-md-3">
+                <table class="table table-warning table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Carte</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">Editura</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                    {% for carte in all_books %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ carte.nume }}</td>
+                            <td>{{ carte.autor }}</td>
+                            <td>{{ carte.editura }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a class="btn btn-success" href="{% url 'list-of-cars' %}">Go to list of cars</a>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

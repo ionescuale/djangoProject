@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Detailed view for {{ trainer }} {% endblock %}
+{% block content %}
+
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            {% if trainer.profile %}
+                <img src="{{ trainer.profile.url }}" class="card-img-top" alt="No image">
+            {% else %}
+                <img src="{% static '/images/default_trainer.png' %}" class="card-img-top" >
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">First Name: {{ trainer.first_name }}</h5>
+                <h5 class="card-title">Last Name: {{ trainer.last_name }}</h5>
+                <p class="card-text">Course: {{ trainer.course }}</p>
+                <p class="card-text">Email: {{ trainer.email}}</p>
+                <p class="card-text">Department: {{ trainer.department|upper }}</p>
+                <p class="card-text">Active: {{ trainer.active }}</p>
+                <p class="card-text">Created at: {{ trainer.created_at }}</p>
+                <p class="card-text">Updated at: {{ trainer.updated_at }}</p>
+                <p class="card-text">Current Date: {{ current_datetime }}</p>
+                <a href="{% url 'update-trainer' trainer.id %}" class="btn btn-primary">Update Data</a>
+                <a href="{% url 'delete-trainer' trainer.id %}" class="btn btn-primary">Delete Trainer</a>
+                <a href="{% url 'list-of-trainers' %}" class="btn btn-primary">Cancel</a>
+            </div>
+            <div class="card-footer">
+                <form action="{% url 'assigned-students' %}" method="get" class="form">
+                    <button class="btn btn-primary" type="submit" name="trainer_id" value={{ trainer.id }}> Go to list of students </button>
+                </form>
+            </div>
+            </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">List of Students</h3>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                            <tr>
+                                <td>{{ student.first_name }}</td>
+                                <td>{{ student.last_name }}</td>
+                                <td>{{ student.email }}</td>
+                                <td><a href="{% url 'update-student' student.id %}" class="btn btn-primary">Update</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

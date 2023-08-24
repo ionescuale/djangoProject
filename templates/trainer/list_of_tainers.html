@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} List of trainers {% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            {% if all_trainers %}
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                 {% for trainer in all_trainers %}
+                     <div class="col-md-3">
+                         <div class="card">
+                            <a href="{% url 'detailed-trainer' trainer.id %}">
+                                {% if trainer.profile %}
+                                    <img src="{{ trainer.profile.url }}" class="card-img-top" alt="No image">
+                                {% else %}
+                                    <img src="{% static '/images/default_trainer.png'%}" class="card-img-top" >
+                                {% endif %}
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ trainer }}</h5>
+                                <p class="card-text">{{ trainer.course }}</p>
+                                <p class="card-text">{{ trainer.email}}</p>
+                                <p class="card-text">{{ trainer.department|upper }}</p>
+                                <a href="{% url 'detailed-trainer' trainer.id %}" class="btn btn-primary">Show details</a>
+{#                                <form action="{% url 'list-of-students-query' %}" method="get">#}
+{#                                    <button class="btn btn-primary" type="submit" name="trainer_id" value="{{ trainer.id }}">Go to list of students</button>#}
+{#                                </form>#}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-4 offset-md-4"> There are no trainers in the table </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
