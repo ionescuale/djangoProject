@@ -143,9 +143,19 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/' # specificam prefixul unde vrem sa fie redirectionat utilizatorul dupa ce se autentifica
 LOGOUT_REDIRECT_URL = '/login/' # specificam prefixul unde vre, sa fie redirectionat utilizatorul dupa delogare
 
+# Config email
 
+# cand folosim console -> inseamna ca vom trimite mailul in consola pycharm-ului
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # reprezinta o setare care specifica c backend(motor) ar trebi sa fie utilizat pt a trimte maiuri
 
+# smtp -> simple mail transfer protocol -> protocol pt a trimite mailuri
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+EMAIL_HOST = 'mail.aplicatiedjango.ro'
+EMAIL_HOST_USER = 'ro46@aplicatiedjango.ro'
+EMAIL_HOST_PASSWORD = 'Django1234!'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'ro46@aplicatiedjango.ro'
 
 
 
