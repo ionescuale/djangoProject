@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "student",
     "trainer",
     "userextend",
+    "feedback",
 ]
 
 MIDDLEWARE = [

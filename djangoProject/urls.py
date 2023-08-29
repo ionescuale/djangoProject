@@ -32,6 +32,7 @@ urlpatterns = [
 
     path("", include('django.contrib.auth.urls')),
     path("", include('userextend.urls')),
+    path("", include('feedback.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

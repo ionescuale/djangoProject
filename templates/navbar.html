@@ -13,53 +13,65 @@
                 </li>
 
                 {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Intro
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'list-of-cars' %}">List of Cars</a></li>
-                        <li><a class="dropdown-item" href="{% url 'list-of-cooking-books' %}">List of Cooking Books</a>
-                        </li>
-                    </ul>
-
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Student
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'create-student' %}">Create a new Student</a></li>
-                        <li><a class="dropdown-item" href="{% url 'list-of-students' %}">List of Students</a></li>
-                    </ul>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Trainer
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'create-trainer' %}">Create a new Trainer</a></li>
-                        <li><a class="dropdown-item" href="{% url 'list-of-trainers' %}">List of Trainers</a></li>
-                    </ul>
-                </li>
 
                     <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        All trainers
-                    </a>
-                    <ul class="dropdown-menu">
-                        {% for trainer in trainers %}
-                            <li><a class ="dropdown-item" href="{% url 'detailed-trainer' trainer.id %}">{{ trainer }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Intro
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'list-of-cars' %}">List of Cars</a></li>
+                            <li><a class="dropdown-item" href="{% url 'list-of-cooking-books' %}">List of Cooking Books</a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Student
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'create-student' %}">Create a new Student</a></li>
+                            <li><a class="dropdown-item" href="{% url 'list-of-students' %}">List of Students</a></li>
+                        </ul>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Trainer
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'create-trainer' %}">Create a new Trainer</a></li>
+                            <li><a class="dropdown-item" href="{% url 'list-of-trainers' %}">List of Trainers</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            All trainers
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% for trainer in trainers %}
+                                <li><a class ="dropdown-item" href="{% url 'detailed-trainer' trainer.id %}">{{ trainer }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="False">Feedback</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'create-feedback' %}">Create new feedback</a></li>
+                            <li><a class="dropdown-item" href="{%  url 'list-of-feedbacks' %}">List of feedbacks</a></li>
+                        </ul>
+                    </li>
                 {% endif %}
             </ul>
+
             {% if user.is_authenticated %}
+
                 <a href="{% url 'logout' %}" class="btn btn-outline-secondary"> Logout, {{ user.username }}</a>
                 <form class="d-flex" method="get" action="{% url 'search' %}" role="search">
                     <input class="form-control me-2" name="filter" type="search" placeholder="Search" aria-label="Search">
@@ -70,7 +82,9 @@
                     <a href="{% url 'login' %}" class="btn btn-outline-primary">Login</a>
                     <a href="{% url 'create-user' %}" class="btn btn-outline-secondary">Sign up</a>
                 </div>
+
             {% endif %}
+
         </div>
     </div>
 </nav>
