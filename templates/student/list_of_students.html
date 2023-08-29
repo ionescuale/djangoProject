@@ -86,8 +86,12 @@
                                             more actions
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="{% url 'update-student' student.id %}">Update</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'delete-student' student.id %}">Delete</a></li>
+                                            {% if perms.student.change_student %}
+                                                <li><a class="dropdown-item" href="{% url 'update-student' student.id %}">Update</a></li>
+                                            {% endif %}
+                                            {% if perms.student.delete_student %}
+                                                <li><a class="dropdown-item" href="{% url 'delete-student' student.id %}">Delete</a></li>
+                                            {% endif %}
                                             <li><a class="dropdown-item" href="{% url 'detailed-student' student.id %}">Show details</a></li>
                                         </ul>
                                     </div>

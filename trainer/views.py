@@ -1,11 +1,12 @@
 from datetime import datetime
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
+from feedback.models import Feedback
 from student.models import Student
 from trainer.forms import TrainerForm, TrainerUpdateForm
 from trainer.models import Trainer, HistoryTrainer
@@ -14,12 +15,13 @@ from trainer.models import Trainer, HistoryTrainer
 # Create your views here.
 
 # CreateView -> folosit pt a genera un fomrular pe baza modelului si pt a salva datele in baza de date
-class TrainerCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class TrainerCreateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'trainer/create_trainer.html'
     model = Trainer
     form_class = TrainerForm
     success_url = reverse_lazy('list-of-trainers')
     success_message = '{f_name} {l_name}'
+    permission_required = 'trainer.add_student'
 
     def form_valid(self, form):
         if form.is_valid():
@@ -52,21 +54,23 @@ class TrainerListView(LoginRequiredMixin, ListView):
     context_object_name = 'all_trainers'
 
 
-class TrainerDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class TrainerDeleteView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = 'trainer/delete_trainer.html'
     model = Trainer
     success_url = reverse_lazy('list-of-trainers')
     success_message = '{f_name} {l_name}'
+    permission_required = 'trainer.delete_trainer'
 
     def get_success_message(self, cleaned_data):
         message = self.success_message + ' ' + 'was successfully deleted'
         return message.format(f_name=self.object.first_name, l_name=self.object.last_name)
 
 
-class TrainerUpdateView(LoginRequiredMixin, UpdateView):
+class TrainerUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'trainer/update_trainer.html'
     model = Trainer
     form_class = TrainerUpdateForm
+    permission_required = 'trainer.change_trainer'
 
     def get_success_url(self):
         return reverse('detailed-trainer', args=[str(self.object.id)])
@@ -86,12 +90,14 @@ class TrainerDetailedView(LoginRequiredMixin, DetailView):
         current_trainer_id = self.kwargs['pk']  # avem acces la id-ul trainerului respectiv
         # print(current_trainer_id)
 
-        students = Student.objects.filter(trainer_id=current_trainer_id)  # realizam un query prin care luam toti
-        # studentii asignati trainerului
-        context['students'] = students  # trimitem in interfata pe baza cheii students, toti studentii
-        # asignati trainerului respectiv
-        # print(students)
+        # students = Student.objects.filter(trainer_id=current_trainer_id)  # realizam un query prin care luam toti
+        # # studentii asignati trainerului
+        # context['students'] = students  # trimitem in interfata pe baza cheii students, toti studentii
+        # # asignati trainerului respectiv
+        # # print(students)
 
+        feedbacks = Feedback.objects.filter(trainer_id=current_trainer_id)
+        context['feedback'] = feedbacks
         return context
 
 

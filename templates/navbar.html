@@ -33,7 +33,9 @@
                             Student
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'create-student' %}">Create a new Student</a></li>
+                            {% if perms.student.add_student %}
+                                <li><a class="dropdown-item" href="{% url 'create-student' %}">Create a new Student</a></li>
+                            {% endif %}
                             <li><a class="dropdown-item" href="{% url 'list-of-students' %}">List of Students</a></li>
                         </ul>
 
@@ -43,7 +45,9 @@
                             Trainer
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'create-trainer' %}">Create a new Trainer</a></li>
+                            {% if perms.trainer.add_trainer %}
+                                <li><a class="dropdown-item" href="{% url 'create-trainer' %}">Create a new Trainer</a></li>
+                            {% endif %}
                             <li><a class="dropdown-item" href="{% url 'list-of-trainers' %}">List of Trainers</a></li>
                         </ul>
                     </li>
@@ -63,7 +67,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="False">Feedback</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'create-feedback' %}">Create new feedback</a></li>
+                            {% if perms.feedback.add_feedback %}
+                                <li><a class="dropdown-item" href="{% url 'create-feedback' %}">Create new feedback</a></li>
+                            {% endif %}
                             <li><a class="dropdown-item" href="{%  url 'list-of-feedbacks' %}">List of feedbacks</a></li>
                         </ul>
                     </li>

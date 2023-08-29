@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.shortcuts import redirect, render
@@ -16,7 +16,7 @@ from student.models import Student, HistoryStudent
 
 # CreateView -> folosit pt a genera un formular pe baza modelului si pt a salva datele in baza de date
 # SuccessMessageMixin - folosit pt a afisa un mesaj de succes in momentul in care actiunea a fost realizata cu succes
-class StudentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class StudentCreateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'student/create_student.html'
     model = Student
     form_class = StudentForm
@@ -66,7 +66,7 @@ class StudentListView(LoginRequiredMixin, ListView):
 
 
 # UpdateView -> il folosim pentru a actualiza datele unui student
-class StudentUpdateView(LoginRequiredMixin, UpdateView):
+class StudentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'student/update_student.html'
     model = Student
     form_class = StudentUpdateForm
@@ -75,7 +75,7 @@ class StudentUpdateView(LoginRequiredMixin, UpdateView):
         return reverse('detailed-student', args=[str(self.object.id)])
 
 
-class StudentDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class StudentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = 'student/delete_student.html'
     model = Student
     success_url = reverse_lazy('list-of-students')
