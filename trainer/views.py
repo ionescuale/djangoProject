@@ -21,7 +21,7 @@ class TrainerCreateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMess
     form_class = TrainerForm
     success_url = reverse_lazy('list-of-trainers')
     success_message = '{f_name} {l_name}'
-    permission_required = 'trainer.add_student'
+    permission_required = 'trainer.add_trainer'
 
     def form_valid(self, form):
         if form.is_valid():
@@ -48,10 +48,11 @@ class TrainerCreateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMess
 
 # ListView -> folosim pt a afisa inregistrarile din tabela trainer
 
-class TrainerListView(LoginRequiredMixin, ListView):
+class TrainerListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'trainer/list_of_tainers.html'
     model = Trainer
     context_object_name = 'all_trainers'
+    permission_required = 'trainer.view_list_of_trainers'
 
 
 class TrainerDeleteView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DeleteView):
@@ -76,9 +77,10 @@ class TrainerUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
         return reverse('detailed-trainer', args=[str(self.object.id)])
 
 
-class TrainerDetailedView(LoginRequiredMixin, DetailView):
+class TrainerDetailedView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     template_name = 'trainer/detailed_trainer.html'
     model = Trainer
+    permission_required = 'trainer.view_trainer'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

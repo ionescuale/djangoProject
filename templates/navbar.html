@@ -24,9 +24,9 @@
                             <li><a class="dropdown-item" href="{% url 'list-of-cooking-books' %}">List of Cooking Books</a>
                             </li>
                         </ul>
-
                     </li>
 
+                    {% if perms.student.add_student or perms.student.view_list_of_students %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
@@ -36,9 +36,14 @@
                             {% if perms.student.add_student %}
                                 <li><a class="dropdown-item" href="{% url 'create-student' %}">Create a new Student</a></li>
                             {% endif %}
-                            <li><a class="dropdown-item" href="{% url 'list-of-students' %}">List of Students</a></li>
+                            {% if perms.student.view_list_of_students %}
+                                <li><a class="dropdown-item" href="{% url 'list-of-students' %}">List of Students</a></li>
+                            {% endif %}
                         </ul>
+                    </li>
+                    {% endif %}
 
+                    {% if perms.trainer.add_trainer or perms.trainer.view_list_of_trainers %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
@@ -48,10 +53,14 @@
                             {% if perms.trainer.add_trainer %}
                                 <li><a class="dropdown-item" href="{% url 'create-trainer' %}">Create a new Trainer</a></li>
                             {% endif %}
-                            <li><a class="dropdown-item" href="{% url 'list-of-trainers' %}">List of Trainers</a></li>
+                            {% if perms.trainer.view_list_of_trainers %}
+                                <li><a class="dropdown-item" href="{% url 'list-of-trainers' %}">List of Trainers</a></li>
+                            {% endif %}
                         </ul>
                     </li>
+                    {% endif %}
 
+                    {% if perms.trainer.view_list_of_trainers %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
@@ -63,6 +72,7 @@
                             {% endfor %}
                         </ul>
                     </li>
+                    {% endif %}
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="False">Feedback</a>
@@ -73,7 +83,9 @@
                             <li><a class="dropdown-item" href="{%  url 'list-of-feedbacks' %}">List of feedbacks</a></li>
                         </ul>
                     </li>
+
                 {% endif %}
+
             </ul>
 
             {% if user.is_authenticated %}

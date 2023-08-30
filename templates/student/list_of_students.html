@@ -81,6 +81,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
+                                {% if perms.student.change_student or perms.student.delete_student or perms.student.view_student %}
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             more actions
@@ -92,9 +93,14 @@
                                             {% if perms.student.delete_student %}
                                                 <li><a class="dropdown-item" href="{% url 'delete-student' student.id %}">Delete</a></li>
                                             {% endif %}
-                                            <li><a class="dropdown-item" href="{% url 'detailed-student' student.id %}">Show details</a></li>
+                                            {% if perms.student.view_student %}
+                                                <li><a class="dropdown-item" href="{% url 'detailed-student' student.id %}">Show details</a></li>
+                                            {% endif %}
                                         </ul>
                                     </div>
+                                {% else %}
+                                    No actions
+                                {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}

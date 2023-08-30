@@ -5,6 +5,7 @@
 {% block content %}
     <div claa="container-fluid">
         <div class="row">
+        {% if all_feedbacks %}
             <div class="col-md-12">
                 <table class="table table-hover">
                     <thead>
@@ -34,8 +35,8 @@
                         {% endfor %}
                     </tbody>
                 </table>
-
             </div>
+        {% endif %}
         </div>
     </div>
 

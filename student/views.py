@@ -22,6 +22,7 @@ class StudentCreateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMess
     form_class = StudentForm
     success_url = reverse_lazy('list-of-students')
     success_message = '{f_name} {l_name}'
+    permission_required = 'student.add_student'
 
     def form_valid(self, form):
         if form.is_valid():
@@ -53,10 +54,11 @@ class StudentCreateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMess
 
 
 # ListView -> folosim pt a afisa inregistrarile din tabela student_student
-class StudentListView(LoginRequiredMixin, ListView):
+class StudentListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = "student/list_of_students.html"
     model = Student
     context_object_name = 'all_students'   # Student.objects.all()
+    permission_required = 'student.view_list_of_students'
 
     # def get_context_data(self, **kwargs):
     #     pass
@@ -70,6 +72,7 @@ class StudentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     template_name = 'student/update_student.html'
     model = Student
     form_class = StudentUpdateForm
+    permission_required = 'student.change_student'
 
     def get_success_url(self):
         return reverse('detailed-student', args=[str(self.object.id)])
@@ -80,16 +83,17 @@ class StudentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMess
     model = Student
     success_url = reverse_lazy('list-of-students')
     success_message = '{f_name} {l_name}'
+    permission_required = 'student.delete_student'
 
     def get_success_message(self, cleaned_data):
         message = self.success_message + ' ' + 'was successfully deleted'
         return message.format(f_name=self.object.first_name, l_name=self.object.last_name)
 
 
-class StudentDetailedView(LoginRequiredMixin, DetailView):
+class StudentDetailedView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     template_name = 'student/detailed_student.html'
     model = Student
-
+    permission_required = 'student.view_student'
 
 @login_required()
 def search(request):

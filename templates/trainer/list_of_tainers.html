@@ -21,6 +21,7 @@
                  {% for trainer in all_trainers %}
                      <div class="col-md-3">
                          <div class="card">
+                            {% if perms.trainer.view_trainer %}
                             <a href="{% url 'detailed-trainer' trainer.id %}">
                                 {% if trainer.profile %}
                                     <img src="{{ trainer.profile.url }}" class="card-img-top" alt="No image">
@@ -28,12 +29,17 @@
                                     <img src="{% static '/images/default_trainer.png'%}" class="card-img-top" >
                                 {% endif %}
                             </a>
+                            {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title">{{ trainer }}</h5>
                                 <p class="card-text">{{ trainer.course }}</p>
                                 <p class="card-text">{{ trainer.email}}</p>
                                 <p class="card-text">{{ trainer.department|upper }}</p>
-                                <a href="{% url 'detailed-trainer' trainer.id %}" class="btn btn-primary">Show details</a>
+                                {% if perms.trainer.view_trainer %}
+                                    <a href="{% url 'detailed-trainer' trainer.id %}" class="btn btn-primary">Show details</a>
+{#                                {% else %}#}
+{#                                    No rights to view details#}
+                                {% endif %}
 {#                                <form action="{% url 'list-of-students-query' %}" method="get">#}
 {#                                    <button class="btn btn-primary" type="submit" name="trainer_id" value="{{ trainer.id }}">Go to list of students</button>#}
 {#                                </form>#}
